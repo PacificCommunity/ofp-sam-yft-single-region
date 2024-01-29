@@ -1,7 +1,7 @@
 ## Preprocess data, write TAF data tables
 
-## Before: catch_year.csv, cpue_year.csv (boot/data)
-## After:  catch_year.csv, cpue_year.csv, yft.ctl, yft.dat (data)
+## Before: catch_quarter.csv, cpue_quarter.csv (boot/data)
+## After:  catch_quarter.csv, cpue_quarter.csv, yft.ctl, yft.dat (data)
 
 library(TAF)
 
@@ -20,8 +20,8 @@ ctlfile <- "data/yft.ctl"
 datfile <- "data/yft.dat"
 
 # Read data
-catch <- read.taf("boot/data/catch_year.csv")
-cpue <- read.taf("boot/data/cpue_year.csv")
+catch <- read.taf("boot/data/catch_quarter.csv")
+cpue <- read.taf("boot/data/cpue_quarter.csv")
 
 # Write ctl file
 comment.ctl("# logr", append=FALSE)
@@ -38,15 +38,15 @@ comment.ctl("# logsigma")
 write.plui(c(1,     -5,  0, -1))
 
 # Write dat file
-comment.dat("# Number of years in catch data", append=FALSE)
+comment.dat("# Number of quarters in catch data", append=FALSE)
 write.n(catch)
-comment.dat("# Catch (1000 t), missing years not allowed")
+comment.dat("# Catch (1000 t), missing quarters not allowed")
 write.tab(catch)
-comment.dat("# Number of years in CPUE data")
+comment.dat("# Number of quarters in CPUE data")
 write.n(cpue)
-comment.dat("# CPUE index, missing years allowed")
+comment.dat("# CPUE index, missing quarters allowed")
 write.tab(cpue)
 
 # Copy TAF tables
-cp("boot/data/catch_year.csv", "data")
-cp("boot/data/cpue_year.csv", "data")
+cp("boot/data/catch_quarter.csv", "data")
+cp("boot/data/cpue_quarter.csv", "data")
