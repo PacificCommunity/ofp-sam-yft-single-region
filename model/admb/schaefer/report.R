@@ -23,3 +23,16 @@ taf.png("index")
 plot(Index~Year, summary, ylim=lim(c(summary$Index, summary$IndexFit)))
 lines(IndexFit~Year, summary)
 dev.off()
+
+# Composite PDF
+pdf("report/results.pdf")
+par(mfrow=c(1, 2))
+# biomass
+z <- barplot(Catch~Year, summary, ylim=lim(summary$Biomass),
+             ylab="Biomass and catch")
+lines(z, summary$Biomass)
+box()
+# index
+plot(Index~Year, summary, ylim=lim(c(summary$Index, summary$IndexFit)))
+lines(IndexFit~Year, summary)
+dev.off()
