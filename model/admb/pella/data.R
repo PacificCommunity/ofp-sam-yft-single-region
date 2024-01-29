@@ -1,7 +1,7 @@
 ## Preprocess data, write TAF data tables
 
-## Before: catch_annual.csv, cpue_annual.csv (boot/data)
-## After:  catch_annual.csv, cpue_annual.csv, yft.ctl, yft.dat (data)
+## Before: catch_year.csv, cpue_year.csv (boot/data)
+## After:  catch_year.csv, cpue_year.csv, yft.ctl, yft.dat (data)
 
 library(TAF)
 
@@ -20,8 +20,8 @@ ctlfile <- "data/yft.ctl"
 datfile <- "data/yft.dat"
 
 # Read data
-catch <- read.taf("boot/data/catch_annual.csv")
-cpue <- read.taf("boot/data/cpue_annual.csv")
+catch <- read.taf("boot/data/catch_year.csv")
+cpue <- read.taf("boot/data/cpue_year.csv")
 
 # Write ctl file
 comment.ctl("# logr", append=FALSE)
@@ -48,5 +48,5 @@ comment.dat("# CPUE index, missing years allowed")
 write.tab(cpue)
 
 # Copy TAF tables
-cp("boot/data/catch_annual.csv", "data")
-cp("boot/data/cpue_annual.csv", "data")
+cp("boot/data/catch_year.csv", "data")
+cp("boot/data/cpue_year.csv", "data")
