@@ -2,10 +2,12 @@ library(TAF)
 
 cpue <- read.taf("single.region.index.csv")
 
-cpue.quarter <- cpue
-names(cpue.quarter) <- c("Year", "CPUE")
-cpue.quarter$Year <- seq_len(nrow(cpue.quarter))
+# Time structure
+cpue$Year <- floor(cpue$Time)
+cpue$Quarter <- 1 + 4 * (cpue$Time - cpue$Year)
+cpue <- cpue[c("Year", "Quarter", "Index")]
 
-cpue.quarter$CPUE <- round(cpue.quarter$CPUE / 1e7, 1)
+# Scale
+cpue$Index <- cpue$Index / 1e6
 
-write.taf(cpue.quarter)
+write.taf(cpue, "cpue_quarter.csv")

@@ -2,9 +2,11 @@ library(TAF)
 
 cpue <- read.taf("single.region.index.csv")
 
-cpue.year <- aggregate(Index~floor(Time), cpue, mean)
-names(cpue.year) <- c("Year", "CPUE")
+# Average index within each year
+cpue$Year <- floor(cpue$Time)
+cpue <- aggregate(Index~Year, cpue, mean)
 
-cpue.year$CPUE <- round(cpue.year$CPUE / 1e7, 1)
+# Scale
+cpue$Index <- cpue$Index / 1e6
 
-write.taf(cpue.year)
+write.taf(cpue, "cpue_year.csv")
