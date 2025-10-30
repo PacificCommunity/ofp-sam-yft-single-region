@@ -1,1 +1,1 @@
-Yellowfin 2025 single-region model
+Yellowfin single-region model
