@@ -23,19 +23,23 @@ datfile <- "data/yft.dat"
 catch <- read.taf("boot/data/catch_quarter.csv")
 cpue <- read.taf("boot/data/cpue_quarter.csv")
 
+# Remove Year and Quarter
+catch <- catch[c("Time", "Catch")]
+cpue <- cpue[c("Time", "Index")]
+
 # Write ctl file
 comment.ctl("# logr", append=FALSE)
-write.plui(c(1,     -5,  0, -1))
+write.plui(c( 1,    -5,  0, -1))
 comment.ctl("# logk")
-write.plui(c(1,      7, 11,  9))
+write.plui(c( 1,     7, 11,  9))
 comment.ctl("# loga")
 write.plui(c(-1,   -10,  2,  0))
 comment.ctl("# p")
-write.plui(c(1, -0.99,  9,  1))
+write.plui(c( 1, -0.99,  9,  1))
 comment.ctl("# logq")
-write.plui(c(1,    -11, -3, -7))
+write.plui(c( 1,   -11, -3, -7))
 comment.ctl("# logsigma")
-write.plui(c(1,     -5,  0, -1))
+write.plui(c( 1,    -5,  0, -1))
 
 # Write dat file
 comment.dat("# Number of quarters in catch data", append=FALSE)
@@ -47,6 +51,6 @@ write.n(cpue)
 comment.dat("# CPUE index, missing quarters allowed")
 write.tab(cpue)
 
-# Copy TAF tables
+# Copy CSV tables
 cp("boot/data/catch_quarter.csv", "data")
 cp("boot/data/cpue_quarter.csv", "data")
