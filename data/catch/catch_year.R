@@ -1,12 +1,16 @@
 library(TAF)
 
+# Read YFT 2023 assessment data
 catch <- read.taf(file.path("https://raw.githubusercontent.com",
                             "PacificCommunity/ofp-sam-yft-2023-diagnostic/main",
                             "TAF/output/catch.csv"))
 
-catch.year <- round(aggregate(t~year, catch, sum))
-names(catch.year) <- c("Year", "Catch")
+# Calculate annual catches
+catch <- round(aggregate(catch~year, catch, sum))
+names(catch) <- c("Year", "Catch")
 
-catch.year$Catch <- round(catch.year$Catch / 1e3, 1)
+# Round catches
+catch$Catch <- round(catch$Catch / 1e3, 1)
 
-write.taf(catch.year)
+# Write table
+write.taf(catch, "catch_year.csv")

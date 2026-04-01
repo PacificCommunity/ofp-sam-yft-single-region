@@ -1,15 +1,19 @@
 library(TAF)
 
+# Read YFT 2023 assessment data
 catch <- read.taf(file.path("https://raw.githubusercontent.com",
                             "PacificCommunity/ofp-sam-yft-2023-diagnostic/main",
                             "TAF/output/catch.csv"))
 
-catch.quarter <- round(aggregate(t~year+season, catch, sum))
-catch.quarter <- catch.quarter[order(catch.quarter$year, catch.quarter$season),]
-names(catch.quarter) <- c("Year", "Quarter", "Catch")
-catch.quarter$Year <- seq_len(nrow(catch.quarter))
-catch.quarter$Quarter <- NULL
+# Calculate quarterly catches
+catch <- round(aggregate(catch~year+season, catch, sum))
+catch <- catch[order(catch$year, catch$season),]
+names(catch) <- c("Year", "Quarter", "Catch")
+catch <- data.frame(Time=seq_len(nrow(catch)), catch)
+row.names(catch) <- NULL
 
-catch.quarter$Catch <- round(catch.quarter$Catch / 1e3, 1)
+# Round catches
+catch$Catch <- round(catch$Catch / 1e3, 1)
 
-write.taf(catch.quarter)
+# Write table
+write.taf(catch, "catch_quarter.csv")
